@@ -631,55 +631,62 @@ footer {
 </div>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// Counter animation
-function animateCounter(counter) {
-  var target = parseInt(counter.getAttribute('data-target'));
-  var suffix = counter.getAttribute('data-suffix') || '';
-  var current = 0;
-  var increment = Math.ceil(target / 60);
-  var timer = setInterval(function() {
-    current += increment;
-    if (current >= target) {
-      current = target;
-      clearInterval(timer);
-    }
-    counter.textContent = current + suffix;
-  }, 30);
-}
-
-// Start immediately
-var countersStarted = false;
-function startCounters() {
-  if (countersStarted) return;
-  countersStarted = true;
+window.onload = function() {
+  // Counter animation
+  function animateCounter(counter) {
+    var target = parseInt(counter.getAttribute('data-target'));
+    var suffix = counter.getAttribute('data-suffix') || '';
+    var current = 0;
+    var increment = Math.ceil(target / 50);
+    var timer = setInterval(function() {
+      current += increment;
+      if (current >= target) {
+        current = target;
+        clearInterval(timer);
+      }
+      counter.textContent = current + suffix;
+    }, 40);
+  }
   document.querySelectorAll('[data-target]').forEach(animateCounter);
-}
-startCounters();
-window.onload = startCounters;
 
-// Form functions
-function envoyerWA() {
-  var f = document.querySelector('.contact-form');
-  var nom = f.querySelector('[name="nom"]').value || 'Non renseigné';
-  var email = f.querySelector('[name="email"]').value || 'Non renseigné';
-  var tel = f.querySelector('[name="telephone"]').value || 'Non renseigné';
-  var type = f.querySelector('[name="type_demande"]').value || 'Non renseigné';
-  var org = f.querySelector('[name="organisation"]').value || 'Non renseigné';
-  var msg = f.querySelector('[name="message"]').value || 'Non renseigné';
-  var texte = "Bonjour NetAxis !\n\nNom : " + nom + "\nEmail : " + email + "\nTél : " + tel + "\nType : " + type + "\nOrg : " + org + "\nMessage : " + msg;
-  window.open("https://wa.me/221774907702?text=" + encodeURIComponent(texte), "_blank");
-}
-function envoyerMail() {
-  var f = document.querySelector('.contact-form');
-  var nom = f.querySelector('[name="nom"]').value || 'Non renseigné';
-  var email = f.querySelector('[name="email"]').value || 'Non renseigné';
-  var tel = f.querySelector('[name="telephone"]').value || 'Non renseigné';
-  var type = f.querySelector('[name="type_demande"]').value || 'Non renseigné';
-  var org = f.querySelector('[name="organisation"]').value || 'Non renseigné';
-  var msg = f.querySelector('[name="message"]').value || 'Non renseigné';
-  var sujet = "Demande NetAxis - " + type + " - " + nom;
-  var corps = "Bonjour NetAxis,\n\nNom : " + nom + "\nEmail : " + email + "\nTél : " + tel + "\nType : " + type + "\nOrg : " + org + "\nMessage : " + msg;
-  window.location.href = "mailto:nabass275@gmail.com?subject=" + encodeURIComponent(sujet) + "&body=" + encodeURIComponent(corps);
-}
+  // Form functions
+  function envoyerWA() {
+    var f = document.querySelector('.contact-form');
+    var nom = f.querySelector('[name="nom"]').value || 'Non renseigné';
+    var email = f.querySelector('[name="email"]').value || 'Non renseigné';
+    var tel = f.querySelector('[name="telephone"]').value || 'Non renseigné';
+    var type = f.querySelector('[name="type_demande"]').value || 'Non renseigné';
+    var org = f.querySelector('[name="organisation"]').value || 'Non renseigné';
+    var msg = f.querySelector('[name="message"]').value || 'Non renseigné';
+    var texte = "Bonjour NetAxis !\n\nNom : " + nom + "\nEmail : " + email + "\nTél : " + tel + "\nType : " + type + "\nOrg : " + org + "\nMessage : " + msg;
+    window.open("https://wa.me/221774907702?text=" + encodeURIComponent(texte), "_blank");
+  }
+  function envoyerMail() {
+    var f = document.querySelector('.contact-form');
+    var nom = f.querySelector('[name="nom"]').value || 'Non renseigné';
+    var email = f.querySelector('[name="email"]').value || 'Non renseigné';
+    var tel = f.querySelector('[name="telephone"]').value || 'Non renseigné';
+    var type = f.querySelector('[name="type_demande"]').value || 'Non renseigné';
+    var org = f.querySelector('[name="organisation"]').value || 'Non renseigné';
+    var msg = f.querySelector('[name="message"]').value || 'Non renseigné';
+    var sujet = "Demande NetAxis - " + type + " - " + nom;
+    var corps = "Bonjour NetAxis,\n\nNom : " + nom + "\nEmail : " + email + "\nTél : " + tel + "\nType : " + type + "\nOrg : " + org + "\nMessage : " + msg;
+    window.location.href = "mailto:nabass275@gmail.com?subject=" + encodeURIComponent(sujet) + "&body=" + encodeURIComponent(corps);
+  }
+  window.envoyerWA = envoyerWA;
+  window.envoyerMail = envoyerMail;
 
-// S
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      var href = a.getAttribute('href');
+      if (href === '#') return;
+      e.preventDefault();
+      var target = document.querySelector(href);
+      if (target) target.scrollIntoView({behavior:'smooth'});
+    });
+  });
+};
+</script>
+</body>
+</html>
