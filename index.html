@@ -647,9 +647,14 @@ function animateCounter(counter) {
   }
   requestAnimationFrame(step);
 }
+// Start counters immediately
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('[data-target]').forEach(animateCounter);
+});
+// Fallback
 setTimeout(function() {
   document.querySelectorAll('[data-target]').forEach(animateCounter);
-}, 800);
+}, 500);
 
 // Form functions
 function envoyerWA() {
